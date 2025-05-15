@@ -87,8 +87,11 @@ function createMessageDiv(msg, mediaLinks) {
   let lines = messageBody.split(/\r?\n/);
 
   // Remove lines that are media file indicators
-  lines = lines.filter(line => !line.match(/^IMG-\d{8}-WA\d{4}\.(jpg|jpeg|png|mp4|opus) \(file attached\)$/i));
-
+  // ...existing code...
+lines = lines.filter(
+  line => !line.match(/^(IMG|VID|AUD|PTT)-\d{8}-WA\d{4}\.(jpg|jpeg|png|mp4|opus|mp3|wav|mkv)( \(file attached\))?$/i)
+);
+// ...existing code...
   // Recombine clean message
   const cleanMessage = lines.join("\n").trim();
 
@@ -102,7 +105,8 @@ function createMessageDiv(msg, mediaLinks) {
   }
 
   // Add media if available
-  const mediaFileMatch = messageBody.match(/(IMG-\d{8}-WA\d{4}\.(jpg|jpeg|png|mp4|opus))/i);
+//   const mediaFileMatch = messageBody.match(/(IMG-\d{8}-WA\d{4}\.(jpg|jpeg|png|mp4|opus))/i);
+const mediaFileMatch = messageBody.match(/((IMG|VID|AUD|PTT)-\d{8}-WA\d{4}\.(jpg|jpeg|png|mp4|opus|mp3|wav|mkv))/i);
   if (mediaFileMatch) {
     const mediaFile = mediaFileMatch[1];
     const url = mediaLinks[mediaFile];
